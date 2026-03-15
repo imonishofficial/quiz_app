@@ -16,7 +16,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
   var currentQuestionIndex = 0;
 
   void answerQuestion(String selectedAnswer) {
-    widget.onSelectAnswer('');
+    widget.onSelectAnswer(selectedAnswer);
     setState(() {
       currentQuestionIndex++;
     });
@@ -35,24 +35,48 @@ class _QuestionScreenState extends State<QuestionScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
 
           children: [
+            /// Progress text
             Text(
-              currentQuestion.text,
-              style: GoogleFonts.lato(
-                color: const Color.fromARGB(255, 230, 213, 246),
-                fontSize: 23,
-                fontWeight: FontWeight.bold,
+              "Question ${currentQuestionIndex + 1} / ${questions.length}",
+              style: const TextStyle(color: Colors.white70, fontSize: 18),
+            ),
+
+            const SizedBox(height: 20),
+
+            /// Question Card
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 213, 97, 255),
+                borderRadius: BorderRadius.circular(15),
               ),
-              textAlign: TextAlign.center,
+              child: Text(
+                currentQuestion.text,
+                style: GoogleFonts.lato(
+                  color: const Color.fromARGB(255, 242, 232, 252),
+                  fontSize: 23,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
             ),
             const SizedBox(height: 30),
+
             ...currentQuestion.getShuffledAnswers().map((answer) {
-              return AnswerButton(
-                answerText: answer,
-                onTap: () {
-                  answerQuestion(answer);
-                },
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 6),
+                child: AnswerButton(
+                  answerText: answer,
+                  onTap: () {
+                    answerQuestion(answer);
+                  },
+                ),
               );
             }),
+            const SizedBox(height: 20,),
+            LinearProgressIndicator(value:(currentQuestionIndex + 1) / questions.length,
+            backgroundColor: Colors.white,
+            color: Colors.amber,)
           ],
         ),
       ),

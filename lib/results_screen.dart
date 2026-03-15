@@ -3,9 +3,14 @@ import 'package:quiz_prj/data/questions.dart';
 import 'package:quiz_prj/questions_summary.dart';
 
 class ResultsScreen extends StatelessWidget {
-  const ResultsScreen({super.key, required this.chosenAnswers});
+  const ResultsScreen({
+    super.key,
+    required this.chosenAnswers,
+    required this.onRestart,
+  });
 
   final List<String> chosenAnswers;
+  final void Function() onRestart;
 
   List<Map<String, Object>> getSummaryData() {
     final List<Map<String, Object>> summary = [];
@@ -37,13 +42,31 @@ class ResultsScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const Icon(Icons.emoji_events, color: Colors.amber, size: 80),
+
+            const SizedBox(height: 20),
+
             Text(
               'You answered $numCorrectQuestions out of $numTotalQuestions questions correctly!',
+              style: const TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+              textAlign: TextAlign.center,
             ),
             const SizedBox(height: 30),
-            QuestionsSummary(getSummaryData()),
+            QuestionsSummary(summaryData),
             const SizedBox(height: 30),
-            TextButton(onPressed: () {}, child: Text("Restart")),
+            TextButton.icon(
+              onPressed: onRestart,
+              icon: const Icon(Icons.restart_alt),
+              label: const Text("Restart"),
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.white,
+                textStyle: const TextStyle(fontSize: 16),
+              ),
+            ),
           ],
         ),
       ),

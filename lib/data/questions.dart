@@ -14,7 +14,6 @@ final questions = [
   QuizQuestion("Who wrote the play 'Romeo and Juliet'?", [
     "William Shakespeare",
     "Charles Dickens",
-
     "Mark Twain", //"William Shakespeare"
     "Jane Austen",
   ]),
