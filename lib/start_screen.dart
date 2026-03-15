@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class StartScreen extends StatefulWidget {
-  const StartScreen({super.key});
+class StartScreen extends StatelessWidget {
+  const StartScreen(this.startQuiz, {super.key});
+  final void Function() startQuiz;
 
-  @override
-  State<StartScreen> createState() => _StartScreenState();
-}
-
-class _StartScreenState extends State<StartScreen> {
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
-
         children: [
           Image.asset("assets/image/quiz_new.png", width: 400),
           Text(
@@ -25,8 +20,13 @@ class _StartScreenState extends State<StartScreen> {
               fontSize: 20,
             ),
           ),
-          const SizedBox(height:30,),
-          OutlinedButton(onPressed: (){}, child:Text("Start Quiz!") )
+          const SizedBox(height: 30),
+          OutlinedButton.icon(
+            onPressed: startQuiz,
+            style: OutlinedButton.styleFrom(foregroundColor: Colors.white),
+            icon: Icon(Icons.play_arrow),
+            label: const Text("Start Quiz!"),
+          ),
         ],
       ),
     );
